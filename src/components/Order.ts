@@ -14,22 +14,20 @@ export class OrderForm extends Form<TOrder> {
         this.cashPay = ensureElement('.button_alt[name=cash]', container) as HTMLButtonElement;
 
         this.cardPay.addEventListener('click', () => {
-            this.payment = 'card',
-            this.onInputChange('payment', 'card');
+            events.emit('payment:select', { method: 'card' });
         });
 
         this.cashPay.addEventListener('click', () => {
-            this.payment = 'cash',
-            this.onInputChange('payment', 'cash');
-        })
+            events.emit('payment:select', { method: 'cash' });
+        });
     }
-
-    set payment(value:TPayment) {
+    
+    set payment(value: TPayment) {
         this.cardPay.classList.toggle('button_alt-active', value === 'card');
         this.cashPay.classList.toggle('button_alt-active', value === 'cash');
     }
 
-    set address(value:string) {
+    set address(value: string) {
         (this.container.elements.namedItem('address') as HTMLInputElement).value = value;
     }
 }

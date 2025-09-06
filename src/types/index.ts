@@ -18,7 +18,6 @@ export interface IOrder {
 
 export interface IBasket {
   products: string[];
-  total: number;
 }
 
 export type TOrder = Omit<IOrder, 'total' | 'items'>;

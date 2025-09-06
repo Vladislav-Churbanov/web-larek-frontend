@@ -67,7 +67,7 @@ interface IProduct {
   description: string;
   image: string;
   title: string;
-  categoty: string;
+  category: string;
   price: number | null;
 }
 ```
@@ -106,7 +106,7 @@ interface IBasket {
 
 ```typescript
 interface IOrder {
-  payment: TPaymentMethod;
+  payment: TPayment;
   email: string;
   phone: string;
   address: string;
@@ -131,7 +131,7 @@ interface IOrderResult {
 }
 ```
 Свойства интерфейса:
-1.  `id` -  идентефикатор товаров, которые пользователь заказал
+1.  `id` -  уникальный идентификатор присвоенный сервером
 2.  `total` - итоговая сумма в заказе
 
 
@@ -188,7 +188,7 @@ class ProductModel {
   // корзина товаров
   basket: IBasket = { 
     products: [], // продукты в корзине
-    total: 0 // итоговая сумма в корзине
+    // total вычисляется динамически через геттер в ProductModel
   };
   // заказ
   order: TOrder = { 
@@ -261,7 +261,7 @@ interface ICardEvent {
   onclick: (event: MouseEvent) => void;
 }
 
-class Card extends Component<IBasket> {
+class Card extends Component<TCard> {
   protected titleElement: HTMLElement; // название карточки
   protected priceElement: HTMLElement; // цена
   protected categoryElement?: HTMLElement; // категория товара(необязательное свойство)
@@ -331,7 +331,7 @@ class Basket extends Component<IBasketView> {
 
   set items(items: HTMLElement[]) {} // Этот метод заполняет массив элементов корзины, принимая в качестве аргумента массив HTMLElement. Также он содержит логику обработки ситуации, когда массив пуст.
 
-  set total(total: number) {} // метод устанавливающий итоговую сумму в корзине
+   render(data: IBasketView): HTMLElement {} // Итоговая сумма вместе с элементами корзины передается через render в объект типа `IBasketView`
 }
 ```
 
